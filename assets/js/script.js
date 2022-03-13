@@ -1,6 +1,8 @@
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 var taskIdCounter = 0;
+// selects the page-content id from html file
+var pageContentEl = document.querySelector("#page-content");
 
 var taskFormHandler = function(event) {
     // stops browser from using default setting for things like the dropdown menu
@@ -30,7 +32,7 @@ var taskFormHandler = function(event) {
 
     // send it as an argument to createTaskEl
     createTaskEl(taskDataObj);
-}
+};
 
 var createTaskEl = function(taskDataObj) {    
     // create a list item
@@ -57,7 +59,7 @@ var createTaskEl = function(taskDataObj) {
 
     //increase task counter for next unique ID
     taskIdCounter++;
-}
+};
 
 var createTaskActions = function(taskID) {
     // to create new div element with name task-actions
@@ -104,7 +106,24 @@ var createTaskActions = function(taskID) {
 
     // ends function and specifies value to be returned to function caller
     return actionContainerEl;
-}
+};
 
 formEl.addEventListener("submit", taskFormHandler);
+
+var deleteTask = function(taskID) {
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskID + "']");
+    taskSelected.remove();
+};
+
+var taskButtonHandler = function(event) {
+    console.log(event.target);
+
+    if (event.target.matches(".delete-btn")) {
+        // get the element's task ID
+        var taskID = event.target.getAttribute("data-task-id");
+        deleteTask(taskID);
+    }
+};
+
+pageContentEl.addEventListener("click", taskButtonHandler);
 
