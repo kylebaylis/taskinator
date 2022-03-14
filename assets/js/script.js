@@ -256,7 +256,27 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+};
 
+
+// get tasks from localStorage
+// convert tasks from string format back into an array
+// iterates through a tasks array and creates task elements on the page from it
+var loadTasks = function() {
+    var savedTasks = localStorage.getItem("tasks");
+    // check if tasks = null, if so set array to be empty and return to stop function
+    if (!savedTasks) {
+       return false;
+    }
+    // to return string to array of objects, since it's currently a string
+    savedTasks = JSON.parse(savedTasks);
+    // loop through savedTasks array
+    for (var i = 0; i < savedTasks.length; i++) {
+        // puts each task object into createTaskEl function
+        createTaskEl(savedTasks[i]);
+    }
+};
+// for changing status
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
+loadTasks();
